@@ -11,7 +11,7 @@ import User from '../models/User.js';
 
 dotenv.config();
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://dehype:dehaep123@ac-6rxlu7o-shard-00-00.nsvwh6y.mongodb.net:27017,ac-6rxlu7o-shard-00-01.nsvwh6y.mongodb.net:27017,ac-6rxlu7o-shard-00-02.nsvwh6y.mongodb.net:27017/supzgdatabases?replicaSet=atlas-oxmzq8-shard-0&ssl=true&authSource=admin';
+const MONGO_URI = process.env.MONGO_URI || 'your mongo link, to rehash password';
 
 async function hashPasswords() {
   try {
