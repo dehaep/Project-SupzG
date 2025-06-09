@@ -1,0 +1,51 @@
+import React, { createContext, useState, useEffect } from "react";
+import API from "../api/axiosInstance";
+
+export const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(null);
+  const [role, setRole] = useState(null);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // On mount, fetch user info from backend using token in localStorage
+    const storedToken = localStorage.getItem("token");
+    const storedRole = localStorage.getItem("role");
+    const storedUser = localStorage.getItem("currentUser");
+
+    if (storedToken) {
+      setToken(storedToken);
+    }
+    if (storedRole) {
+      setRole(storedRole);
+    }
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+    setLoading(false);
+  }, []);
+
+  const login = (token, role, user) => {
+    setToken(token);
+    setRole(role);
+    setUser(user);
+    localStorage.setItem("token", token);
+    localStorage.setItem("role", role);
+    localStorage.setItem("currentUser", JSON.stringify(user));
+  };
+
+  const logout = () => {
+    setToken(null);
+    setRole(null);
+    setUser(null);
+    localStorage.clear();
+  };
+
+  return (
+    <AuthContext.Provider value={{ token, role, user, login, logout, loading }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
